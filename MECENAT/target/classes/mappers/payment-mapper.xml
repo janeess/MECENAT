@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="paymentMapper">
+
+	<resultMap type="payment" id="paymentResult">
+		<result column="PAYMENT_NO" property="paymentNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="PAYMENT_METHOD" property="paymentMethod"/>
+		<result column="PAYMENT_DATE" property="paymentDate"/>
+		<result column="PAYMENT_STATUS" property="paymentStatus"/>
+		<result column="PAYMENT_AMOUNT" property="paymentAmount"/>
+		<result column="DEPOSIT_NAME" property="depositName"/>
+		<result column="DEPOSIT_BANK" property="depositBank"/>
+		<result column="CARDCOMPANY_CODE" property="cardCompanyCode"/>
+		<result column="CARD_NO" property="cardNo"/>
+		<result column="PERFO_NO" property="perfoNo"/>
+		<result column="PERFO_TITLE" property="perfoTitle"/>
+		<result column="HALL_NAME" property="hallName"/>
+	</resultMap>
+	
+	<resultMap type="purchase" id="purchaseResult">
+		<result column="PURCHASE_NO" property="purchaseNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="PERFO_TITLE" property="perfoTitle"/>
+		<result column="HALL_NAME" property="hallName"/>
+		<result column="SEAT_LIST" property="seatList"/>
+		<result column="PAYMENT_NO" property="paymentNo"/>
+		<result column="PERFO_NO" property="perfoNo"/>
+		<result column="CUSTOMERSERVICE_STATUS" property="customerserviceStatus"/>
+		<result column="PURCHASE_DATE" property="purchaseDate"/>
+		<result column="RESERVATION_DATE" property="reservationDate"/>
+		<result column="PERFO_START_TIME" property="perfoStartTime"/>
+		<result column="SEAT_PRICE" property="seatPrice"/>
+	</resultMap>
+	
+	<insert id="insertPaymentInfo">
+		INSERT INTO PAYMENT (PAYMENT_NO
+						   , USER_ID
+						   , PAYMENT_METHOD
+						   , PAYMENT_DATE
+						   , PAYMENT_DETAIL_TIME
+						   , PAYMENT_STATUS
+						   , PAYMENT_AMOUNT
+						   , DEPOSIT_NAME
+						   , DEPOSIT_BANK
+						   , CARDCOMPANY_CODE
+						   , CARD_NO)
+		VALUES(SEQ_PAYNO.NEXTVAL
+			 , #{userId}
+			 , #{paymentMethod}
+			 , DEFAULT
+			 , #{paymentDetailTime}
+			 , #{paymentStatus}
+			 , #{paymentAmount}
+			 , #{depositName}
+			 , #{depositBank}
+			 , #{cardCompanyCode}
+			 , #{cardNo})
+	</insert>
+	
+	<select id="getPaymentNo" resultType="_int">
+		SELECT PAYMENT_NO
+		FROM PAYMENT
+		WHERE USER_ID = #{userId}
+		AND PAYMENT_DETAIL_TIME = #{paymentDetailTime}
+	</select>
+	
+	<insert id="insertPurchaseInfo">
+		INSERT INTO PURCHASE (PURCHASE_NO
+						   , USER_ID
+						   , PERFO_TITLE
+						   , HALL_NAME
+						   , SEAT_LIST
+						   , PAYMENT_NO
+						   , PERFO_NO
+						   , CUSTOMERSERVICE_STATUS
+						   , PURCHASE_DATE
+						   , RESERVATION_DATE
+						   , PERFO_START_TIME
+						   , SEAT_PRICE)
+		VALUES(SEQ_PURCHASENO.NEXTVAL
+			 , #{userId}
+			 , #{perfoTitle}
+			 , #{hallName}
+			 , #{seatList}
+			 , #{paymentNo}
+			 , #{perfoNo}
+			 , #{customerserviceStatus}
+			 , DEFAULT
+			 , #{reservationDate}
+			 , #{perfoStartTime}
+			 , #{seatPrice})
+	</insert>
+	
+	<delete id="deleteTemporaryPurchaseInfo">
+		DELETE 
+		FROM PURCHASE
+		WHERE USER_ID = #{userId}
+		AND HALL_NAME IS NULL
+		AND PERFO_NO = #{perfoNo}
+	</delete>
+	
+<!-- 	혜원_mypage 관련 start -->
+	<select id="selectPaymentList" resultMap="paymentResult">
+	<![CDATA[
+        SELECT PAYMENT_NO, PAYMENT_DATE, PAYMENT_METHOD, PAYMENT_AMOUNT, PERFO_NO, PERFO_TITLE, HALL_NAME, PAYMENT_STATUS
+		FROM PAYMENT
+		JOIN PURCHASE USING(PAYMENT_NO)
+        WHERE PAYMENT.USER_ID = #{userId} 
+        AND PURCHASE_DATE >= #{startDate} 
+		AND PURCHASE_DATE <= #{endDate} 
+        GROUP BY PAYMENT_NO, PAYMENT_DATE, PAYMENT_METHOD, PAYMENT_AMOUNT, PERFO_NO, PERFO_TITLE, HALL_NAME, PAYMENT_STATUS
+        ORDER BY PAYMENT_NO DESC
+	]]>		
+	</select>
+	
+	<select id="selectPaymentone" resultMap="paymentResult">
+		SELECT *
+		FROM PAYMENT
+		WHERE PAYMENT_NO = #{paymentNo}
+	</select>
+	
+	<update id="updatePaymentone">
+		UPDATE PAYMENT
+		SET PAYMENT_AMOUNT = #{paymentAmount}, 
+			PAYMENT_STATUS = #{paymentStatus}
+		WHERE PAYMENT_NO = #{paymentNo}
+	</update>
+<!-- 	혜원_mypage 관련 end -->
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
