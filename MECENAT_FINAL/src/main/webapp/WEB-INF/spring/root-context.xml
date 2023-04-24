@@ -38,12 +38,12 @@
 	 	<property name="maxUploadSizePerFile"  value="10000000"/>
 	 </bean>	
 	 
-	<!-- google email -->
+	<!-- google email (사용 시 password 부분 수정 필요)-->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	    <property name="host" value="smtp.gmail.com" />
 	    <property name="port" value="587" />
 	    <property name="username" value="hejin28739@gmail.com" />
-	    <property name="password" value="password"/>
+	    <property name="password" value="password"/> 
 	    <property name="javaMailProperties">
 	        <props>
 	            <prop key="mail.transport.protocol">smtp</prop>

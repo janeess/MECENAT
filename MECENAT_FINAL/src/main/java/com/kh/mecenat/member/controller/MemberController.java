@@ -305,7 +305,7 @@ public class MemberController {
 			if (vo.getUserName().equals(name)) {
 				session.setAttribute("email", vo.getEmail());
 
-				String setfrom = "sjs@naver.com"; // naver
+				String setfrom = "hejin28739@gmail.com"; //gmail
 				String tomail = chkEmail; // 받는사람
 				String title = "[MECENAT] 비밀번호변경 인증 이메일 입니다";
 				String content = System.getProperty("line.separator") + "안녕하세요 회원님" + System.getProperty("line.separator")
