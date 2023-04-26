@@ -202,7 +202,7 @@ body.hide-focus-ring *:focus {
 	<input type="hidden" name="csrfToken" id="csrfToken" value="7f0d129f-5bde-4462-86d0-ea838c826de6">
 	<ul class="clearfix half_w">
 		<li class="l form_w">
-			<h3 class="tit-st4">세종문화회관  회원  로그인</h3>
+			<h3 class="tit-st4">MECENAT 회원  로그인</h3>
 
 			<ul class="form f20">
 			 <c:choose>
@@ -238,7 +238,7 @@ body.hide-focus-ring *:focus {
 		</li>
 		<li class="r sns_join">
 			<h3 class="tit-st4">시민이 자랑하고 싶은 예술 명소!
-			<strong class="small">세종문화회관에 오신 것을 환영합니다.</strong>
+			<strong class="small">MECENAT에 오신 것을 환영합니다.</strong>
 			</h3>
 			<div id="naverIdLogin"></div>
 			<ul class="clearfix">

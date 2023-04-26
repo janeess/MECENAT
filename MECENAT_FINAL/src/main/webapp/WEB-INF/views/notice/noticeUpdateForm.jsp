@@ -40,7 +40,7 @@
 				<article class="bbs-view inner">
 					<div class="in">
 						<header class="tit long">
-							공지사항 작성	<br><br>
+							공지사항 수정	<br><br>
 							<div class="t">
 								<form id="updateForm" method="post" action="update.no" enctype="multipart/form-data">
 									<input type="hidden" name="noticeNo" value="${n.noticeNo }">
